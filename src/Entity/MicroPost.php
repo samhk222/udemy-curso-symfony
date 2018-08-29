@@ -16,8 +16,63 @@ class MicroPost
      */
     private $id;
 
-    public function getId(): ?int
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $text;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $time;
+
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
     {
         return $this->id;
     }
+
+    /**
+     * Get the value of text
+     */ 
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set the value of text
+     *
+     * @return  self
+     */ 
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of time
+     */ 
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Set the value of time
+     *
+     * @return  self
+     */ 
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+
 }
