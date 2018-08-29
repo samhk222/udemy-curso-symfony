@@ -5,3 +5,4 @@ twig:
     globals:
         locale: '%locale%'
         mensagem_global: '%mensagem_global%'
+    form_themes: ['bootstrap_4_layout.html.twig']
