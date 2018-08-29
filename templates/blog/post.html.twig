@@ -4,10 +4,16 @@
 {% block title %}Exibindo um post específico {{ post.title }}{% endblock %}
 
 {% block body %}
-    <p>{{ id }}</a></p>
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.text }}</p>
-    <p>Postado em: {{ post.date|date('H:i:s') }}</p>
-    <a href="{{ path("blog_add") }}">Voltar para index</a>
+    <p></a></p>
+    <div class="alert alert-primary" role="alert">
+        <a href="{{ path('blog_index') }}">Server Info</a>
+    </div>
+    <ul>
+        <li>Env: {{ app.environment }}</li>
+        {# <li>User: {{ app.user }}</li> #}
+        <li>Request: <pre>{{ app.request }}</pre></li>
+        <li>Session Started: {{ app.session.isStarted() }}</li>
+        <li>Debug: {{ app.debug }}</li>
+    </ul>    
 
 {% endblock %}

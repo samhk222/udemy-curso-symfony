@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
 
 /**
  * @Route("/blog");
@@ -39,12 +42,28 @@ class BlogController extends AbstractController
     }
 
     /**
+     * @Route("/serverInfo", name="blog_info")
+     */
+    public function serverInfo(){
+        return $this->render('blog/serverInfo.html.twig',[]);
+    }
+
+    public function getGlobals(){
+        /**
+         * Está dentro do services.yaml
+        */
+        return [
+            'locale' => $this->locale
+        ];
+    }
+
+    /**
      * @Route("/add", name="blog_add")
      */
     public function add(){
         $posts = $this->session->get('posts');
         $posts[uniqid()] = [
-            'title' => "qualquer título" .rand(1,100),
+            'title' => "qualquer título " .rand(1,100),
             'text' => 'some random text nr ' .rand(1,1000),
             'date' => new \DateTime()
         ];
