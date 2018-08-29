@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use App\Repository\MicroPostRepository;
 
 /**
@@ -13,24 +12,19 @@ class MicroPostController extends AbstractController
 {
 
     private $microPostRepository;
-    /**
-     * @var \Twig_Environment
-     */
     private $twig;
 
-    public function __contruct(MicroPostRepository $microPostRepository){
+    public function __construct(MicroPostRepository $microPostRepository){
       $this->microPostRepository = $microPostRepository;
-      $this->twig = $twig;
-
-      dump($twig);
+      //dump($microPostRepository);
     }
     /**
      * @Route("/", name="micro_post_index")
      */
-    public function index(\Twig_Environment $twig){
+    public function index(){
         
         return $this->render('micro-post/index.html.twig',[
-            'posts' => []
+            'posts' => $this->microPostRepository->findAll()
         ]);
     }
 
