@@ -109,7 +109,7 @@ class MicroPostController extends AbstractController
         */
 
         $this->entityManager->remove($micropost);
-        //$this->entityManager->flush();
+        $this->entityManager->flush();
 
         //$this->flashBag->add('notice', 'Registro Excluído');
 
