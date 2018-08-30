@@ -9,6 +9,7 @@ use App\Repository\MicroPostRepository;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\MicroPost;
+use App\Form\MicroPostType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -22,13 +23,10 @@ class MicroPostController extends AbstractController
     private $microPostRepository;
     private $twig;
     private $formFactory;
-    private $request;
 
     public function __construct(MicroPostRepository $microPostRepository){
       $this->microPostRepository = $microPostRepository;
-    //   $this->formFactory = $formFactory;
-    //   $this->request = $request;
-      //dump($microPostRepository);
+
     }
     /**
      * @Route("/", name="micro_post_index")
@@ -43,7 +41,7 @@ class MicroPostController extends AbstractController
     /**
      * @Route("/add", name="micro_post_add")
      */
-    public function add(FormFactoryInterface $formFactory, Request $request, EntityManagerInterface $entityManager, RouterInterface $router){
+    public function add(Request $request, EntityManagerInterface $entityManager, RouterInterface $router){
         
         $micropost = new MicroPost();
         $micropost->setTime(new \DateTime());
@@ -67,6 +65,23 @@ class MicroPostController extends AbstractController
         return $this->render('micro-post/add.html.twig',[
             'posts' => $this->microPostRepository->findAll(),
             'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/{id}", name="micro_post_blog")
+     */
+    public function post($id){
+       
+
+        //dump( $env = $this->getParameter('kernel.environment') );
+
+        $post = $this->microPostRepository->find($id);
+
+
+        return $this->render('micro-post/post.html.twig',[
+            'post' => $post
         ]);
     }
 
