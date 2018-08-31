@@ -7,6 +7,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class AppFixtures extends Fixture{
     
@@ -16,8 +17,8 @@ class AppFixtures extends Fixture{
     }
 
     public function load(ObjectManager $manager){
-        $this->loadMicroPosts($manager);
         $this->loadUsers($manager);
+        $this->loadMicroPosts($manager);
 
     }
 
@@ -26,6 +27,7 @@ class AppFixtures extends Fixture{
             $micropost = new Micropost();
             $micropost->setText("Some random text " .rand(1,1000));
             $micropost->setTime(new \DateTime('2018-08-29'));
+            $micropost->setUser( $this->getReference('QualquerNome') );
             $manager->persist($micropost);
         }
         $manager->flush();        
@@ -47,8 +49,13 @@ class AppFixtures extends Fixture{
         $user->setEmail('john@gmail.com');
         $user->setPassword( $this->passwordEncoder->encodePassword($user, 'hellojohn') );
 
+        $this->addReference('QualquerNome', $user);
+
+
         $manager->persist( $user );
         $manager->flush();
+
+        // 44. Fixtures for relations (using references in fixtures)
 
     }
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MicroPostRepository")
@@ -92,6 +93,6 @@ class MicroPost
     public function setUser($user) :void {
         $this->user = $user;
     }
-
+// Fim da aula 42 - Assigning user to MicroPost (ManyToOne & OneToMany)
 
 }

@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class UserType extends AbstractType {
     
