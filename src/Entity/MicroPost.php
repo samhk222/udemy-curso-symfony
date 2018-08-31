@@ -31,6 +31,13 @@ class MicroPost
     private $time;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\JoinColumn(name="srv_usuario_id")
+     */
+    private $user;
+
+
+    /**
      * Get the value of id
      */ 
     public function getId()
@@ -76,6 +83,14 @@ class MicroPost
         $this->time = $time;
 
         return $this;
+    }
+
+    public function getUser(){
+        return $this->user;
+    }
+
+    public function setUser($user) :void {
+        $this->user = $user;
     }
 
 

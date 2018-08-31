@@ -57,6 +57,17 @@ class User implements UserInterface, \Serializable
      */
     private $fullname;
 
+    /**
+     * @Orm\OneToMany(targetEntity="App\Entity\MicroPost", mappedBy="user")
+     */
+    private $posts; // Esse nome está dentro do inversedBy no MicroPost class
+
+
+    public function __construct(){
+        $this->posts = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,6 +157,10 @@ class User implements UserInterface, \Serializable
 
     public function setPlainPassword($plainPassword){
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getPosts(){
+        return $this->posts;
     }
 
 }
