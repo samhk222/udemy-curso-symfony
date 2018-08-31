@@ -39,19 +39,23 @@ class AppFixtures extends Fixture{
         $user->setUsername('marcella');
         $user->setEmail('marcella@gmail.com');
         $user->setPassword( $this->passwordEncoder->encodePassword($user, 'marcella') );
-        
         $manager->persist( $user );
         $manager->flush();
 
         $user = new User();
-        $user->setFullname('John');
-        $user->setUsername('john');
+        $user->setFullname('John Doe');
+        $user->setUsername('john Doe');
         $user->setEmail('john@gmail.com');
         $user->setPassword( $this->passwordEncoder->encodePassword($user, 'hellojohn') );
+        $manager->persist( $user );
+        $manager->flush();
 
+        $user = new User();
+        $user->setFullname('Samuel Aiala Ferreira');
+        $user->setUsername('samhk222');
+        $user->setEmail('samuca@samuca.com');
+        $user->setPassword( $this->passwordEncoder->encodePassword($user, '123456') );
         $this->addReference('QualquerNome', $user);
-
-
         $manager->persist( $user );
         $manager->flush();
 

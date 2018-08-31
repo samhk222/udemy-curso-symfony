@@ -23,4 +23,11 @@ class SecurityController extends Controller
             'error'         => $error,
         ));
     }
+
+    /**
+     * @Route("/logout", name="security_logout")
+     */
+    public function logout(){
+
+    }
 }
