@@ -12,6 +12,46 @@ use Doctrine\Common\Collections\ArrayCollection;
 class AppFixtures extends Fixture{
     
     private $passwordEncoder;
+
+    private const USERS = [
+        [
+            'username' => 'samhk222',
+            'email' => 'samuca@samuca.com',
+            'password' => '123456',
+            'fullName' => 'Samuel Aiala',
+        ],
+        [
+            'username' => 'john_doe',
+            'email' => 'john_doe@doe.com',
+            'password' => 'john123',
+            'fullName' => 'John Doe',
+        ],
+        [
+            'username' => 'rob_smith',
+            'email' => 'rob_smith@smith.com',
+            'password' => 'rob12345',
+            'fullName' => 'Rob Smith',
+        ],
+        [
+            'username' => 'marry_gold',
+            'email' => 'marry_gold@gold.com',
+            'password' => 'marry12345',
+            'fullName' => 'Marry Gold',
+        ],
+    ];
+
+    private const POST_TEXT = [
+        'Hello, how are you?',
+        'It\'s nice sunny weather today',
+        'I need to buy some ice cream!',
+        'I wanna buy a new car',
+        'There\'s a problem with my phone',
+        'I need to go to the doctor',
+        'What are you up to today?',
+        'Did you watch the game yesterday?',
+        'How was your day?'
+    ];
+    
     public function __construct(UserPasswordEncoderInterface $passwordEncoder){
         $this->passwordEncoder = $passwordEncoder;
     }
@@ -23,43 +63,38 @@ class AppFixtures extends Fixture{
     }
 
     private function loadMicroPosts(ObjectManager $manager){
-        for ($i=0; $i<10; $i++){
+        for ($i=0; $i<100; $i++){
             $micropost = new Micropost();
-            $micropost->setText("Some random text " .rand(1,1000));
-            $micropost->setTime(new \DateTime('2018-08-29'));
-            $micropost->setUser( $this->getReference('QualquerNome') );
+            $micropost->setText(
+                self::POST_TEXT[rand(0, count(self::POST_TEXT)-1)]
+            );
+
+            $dataPost = new \DateTime('2018-08-29');
+            $dataPost->modify("-" .rand(5,30) ." days");
+
+            $micropost->setTime( $dataPost );
+            $micropost->setUser( $this->getReference( self::USERS[rand(0, count(self::USERS)-1)]['username'] ) );
             $manager->persist($micropost);
         }
         $manager->flush();        
     }
     public function loadUsers(ObjectManager $manager){
 
-        $user = new User();
-        $user->setFullname('Marcella Gutierrez');
-        $user->setUsername('marcella');
-        $user->setEmail('marcella@gmail.com');
-        $user->setPassword( $this->passwordEncoder->encodePassword($user, 'marcella') );
-        $manager->persist( $user );
-        $manager->flush();
+        foreach (self::USERS as $userData){
+            $user = new User();
+            // echo "<pre>";
+            // print_r($userData);
+            // echo "</pre>";
+            $user->setFullname($userData['fullName']);
+            $user->setUsername( $userData['username'] );
+            $user->setEmail( $userData['email'] );
+            $this->addReference($userData['username'], $user);
 
-        $user = new User();
-        $user->setFullname('John Doe');
-        $user->setUsername('john Doe');
-        $user->setEmail('john@gmail.com');
-        $user->setPassword( $this->passwordEncoder->encodePassword($user, 'hellojohn') );
-        $manager->persist( $user );
-        $manager->flush();
-
-        $user = new User();
-        $user->setFullname('Samuel Aiala Ferreira');
-        $user->setUsername('samhk222');
-        $user->setEmail('samuca@samuca.com');
-        $user->setPassword( $this->passwordEncoder->encodePassword($user, '123456') );
-        $this->addReference('QualquerNome', $user);
-        $manager->persist( $user );
-        $manager->flush();
-
-        // 44. Fixtures for relations (using references in fixtures)
+            $user->setPassword( $this->passwordEncoder->encodePassword($user, $userData['password']) );
+            $manager->persist( $user );
+            $manager->flush();
+        
+        }
 
     }
 }
