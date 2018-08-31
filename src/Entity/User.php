@@ -144,4 +144,8 @@ class User implements UserInterface, \Serializable
         return $this->plainPassword;
     }
 
+    public function setPlainPassword($plainPassword){
+        $this->plainPassword = $plainPassword;
+    }
+
 }

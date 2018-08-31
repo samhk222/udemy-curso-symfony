@@ -2,12 +2,15 @@
 
 namespace App\Form;
 
+// === Minhas Classes
+use App\Entity\MicroPost;
+
+// === Symfony
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\MicroPost;
 
 
 class MicroPostType extends AbstractType {
@@ -23,7 +26,6 @@ class MicroPostType extends AbstractType {
             'data_class' => MicroPost::class
         ]);
     }
-
   
 }
 ?>
