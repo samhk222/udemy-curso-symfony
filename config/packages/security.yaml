@@ -1,31 +1,58 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        App\Entity\User: bcrypt
+        #Symfony\Component\Security\Core\User\User: plaintext
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    john:
-                        password: helloJohn
-                        roles: 'ROLE_USER'
+        database_users:
+            entity: { class: App\Entity\User, property: username }
+        # in_memory:
+        #     memory:
+        #         users:
+        #             john:
+        #                 password: helloJohn
+        #                 roles: 'ROLE_USER'
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            pattern: ^/
 
             # activate different ways to authenticate
 
-            http_basic: ~
+            # http_basic: ~
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: true
+            form_login: 
+                check_path: security_login
+                login_path: security_login
+                csrf_token_generator: security.csrf.token_manager
+                username_parameter: _username # Opcional, é o nome name do formulário
+                password_parameter: _password # Opcional, é o nome name do formulário
+                csrf_parameter: _csrf_token # Opcional, é o nome name do _csrf_token no formulário
+
+                # default_target_path: micro_post_index
+                # always_user_default_target_path: false
+                
+                # Redireciona para a última página visitada, excetos e for a página de login
+                # use_referer: true
+
+                # Route que o usuário será redirecionado se não conseguir logar
+                # failure_path: 
+
+            logout:
+                path: security_logout
+                target: /
+                
+            
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/micro-post, roles: ROLE_USER }
+        #  - { path: ^/micro-post, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
