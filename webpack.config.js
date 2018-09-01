@@ -19,6 +19,7 @@ Encore
      */
     .addEntry('js/app', 
         ['./assets/js/app.js','./node_modules/bootstrap/dist/js/bootstrap.min.js']
+        
     )
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
