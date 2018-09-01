@@ -16,6 +16,7 @@
         "symfony/security-bundle": "*",
         "symfony/validator": "*",
         "symfony/web-server-bundle": "*",
+        "symfony/webpack-encore-pack": "^1.0",
         "symfony/yaml": "*"
     },
     "require-dev": {
@@ -26,8 +27,7 @@
         "symfony/dotenv": "*",
         "symfony/profiler-pack": "^1.0",
         "symfony/twig-bundle": "*",
-        "symfony/var-dumper": "*",
-        "symfony/webpack-encore-pack": "^1.0"
+        "symfony/var-dumper": "*"
     },
     "config": {
         "preferred-install": {
